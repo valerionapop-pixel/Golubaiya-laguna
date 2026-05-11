@@ -1,7 +1,6 @@
 /**
- * Vercel Serverless: GET /api/booking (проверка), POST /api/booking (заявка)
+ * Vercel: GET/POST /api/booking (маршрут через api/booking/index.js)
  * Env: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
- * Папка api/ с package.json "type":"commonjs" — чтобы не ломался билд при "type":"module" в корне.
  */
 function escHtml(s) {
   return String(s || "")
@@ -64,8 +63,31 @@ async function sendTelegramMessage(token, chatId, text) {
   return j;
 }
 
+function corsHeaders(req) {
+  var origin = String((req.headers && req.headers.origin) || "").trim();
+  if (!origin) return;
+  return {
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    Vary: "Origin",
+  };
+}
+
 module.exports = async function handler(req, res) {
+  var ch = corsHeaders(req);
+  if (ch) {
+    for (var k in ch) {
+      if (Object.prototype.hasOwnProperty.call(ch, k)) res.setHeader(k, ch[k]);
+    }
+  }
   res.setHeader("Content-Type", "application/json; charset=utf-8");
+
+  if (req.method === "OPTIONS") {
+    res.statusCode = 204;
+    res.end();
+    return;
+  }
 
   if (req.method === "GET") {
     var token = String(process.env.TELEGRAM_BOT_TOKEN || "").trim();

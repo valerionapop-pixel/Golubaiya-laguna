@@ -208,7 +208,13 @@
         String(SITE_CONTENT.texts["content-booking-success"]).trim()
           ? String(SITE_CONTENT.texts["content-booking-success"]).trim()
           : "Заявка принята. Мы скоро свяжемся с вами — спасибо!";
-      fetch("/api/booking", {
+      var bookingApi = "/api/booking";
+      try {
+        var bm = document.querySelector('meta[name="laguna-booking-api"]');
+        var bc = bm ? String(bm.getAttribute("content") || "").trim() : "";
+        if (bc) bookingApi = bc;
+      } catch (eBm) {}
+      fetch(bookingApi, {
         method: "POST",
         headers: { "Content-Type": "application/json; charset=utf-8" },
         body: JSON.stringify({
@@ -1744,7 +1750,7 @@
     }
     if (!nosw) {
       navigator.serviceWorker
-        .register("sw.js?v=41", { scope: "./" })
+        .register("sw.js?v=42", { scope: "./" })
         .then(function (reg) {
           try {
             reg.update();
