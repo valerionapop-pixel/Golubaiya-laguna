@@ -193,9 +193,10 @@
       var body = encodeURIComponent(lines.join("\n"));
       var subj = bf.mailSubject != null ? String(bf.mailSubject) : "Бронь — Голубая лагуна";
       var subject = encodeURIComponent(subj);
-      function openMailto() {
+      function openMailto(statusMessage) {
         setBookingStatus(
-          "Не удалось записать заявку на сервер — открываем почту. Отправьте письмо вручную.",
+          statusMessage ||
+            "Не удалось записать заявку на сервер — открываем почту. Отправьте письмо вручную.",
           "warn"
         );
         window.location.href = "mailto:" + BOOKING_EMAIL + "?subject=" + subject + "&body=" + body;
@@ -218,8 +219,14 @@
         }),
       })
         .then(function (r) {
-          return r.json().then(function (j) {
-            return { ok: r.ok && j && j.ok, j: j };
+          return r.text().then(function (txt) {
+            var j = null;
+            try {
+              j = txt ? JSON.parse(txt) : null;
+            } catch (eParse) {
+              j = null;
+            }
+            return { ok: r.ok && j && j.ok, status: r.status, j: j };
           });
         })
         .then(function (x) {
@@ -230,10 +237,34 @@
             showBookingSuccessAnim();
             return;
           }
+          if (x.status === 404) {
+            openMailto(
+              "Адрес /api/booking не найден на этом хостинге. Откройте сайт с Vercel или настройте сервер — открываем почту."
+            );
+            return;
+          }
+          if (x.j && x.j.error === "telegram_not_configured") {
+            openMailto(
+              "На сервере не заданы TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID (Vercel → Project → Settings → Environment Variables → Redeploy). Открываем почту."
+            );
+            return;
+          }
+          if (x.j && x.j.error === "telegram_send_failed") {
+            openMailto(
+              "Telegram отклонил сообщение — проверьте токен бота и chat id, затем Redeploy. Открываем почту."
+            );
+            return;
+          }
+          if (x.j && x.j.error === "validation") {
+            setBookingStatus("Заполните имя, телефон и дату со временем.", "warn");
+            return;
+          }
           openMailto();
         })
         .catch(function () {
-          openMailto();
+          openMailto(
+            "Нет связи с сервером (сеть или блокировка). Открываем почту — отправьте заявку вручную."
+          );
         })
         .finally(function () {
           if (bookingSubmitBtn) bookingSubmitBtn.classList.remove("is-busy");
@@ -1713,7 +1744,7 @@
     }
     if (!nosw) {
       navigator.serviceWorker
-        .register("sw.js?v=40", { scope: "./" })
+        .register("sw.js?v=41", { scope: "./" })
         .then(function (reg) {
           try {
             reg.update();

@@ -1,6 +1,7 @@
 /**
- * Vercel Serverless: POST /api/booking
- * Переменные окружения: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (обязательны для успеха { ok: true })
+ * Vercel Serverless: GET /api/booking (проверка), POST /api/booking (заявка)
+ * Env: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+ * Папка api/ с package.json "type":"commonjs" — чтобы не ломался билд при "type":"module" в корне.
  */
 function escHtml(s) {
   return String(s || "")
@@ -63,13 +64,30 @@ async function sendTelegramMessage(token, chatId, text) {
   return j;
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
+
+  if (req.method === "GET") {
+    var token = String(process.env.TELEGRAM_BOT_TOKEN || "").trim();
+    var chatId = process.env.TELEGRAM_CHAT_ID;
+    if (chatId != null && chatId !== "") chatId = String(chatId).trim();
+    res.statusCode = 200;
+    res.end(
+      JSON.stringify({
+        ok: true,
+        api: "booking",
+        telegram_ready: !!(token && chatId),
+      })
+    );
+    return;
+  }
+
   if (req.method !== "POST") {
     res.statusCode = 405;
     res.end(JSON.stringify({ ok: false, error: "method_not_allowed" }));
     return;
   }
+
   var payload = await readJsonBody(req);
   if (!payload || typeof payload !== "object") {
     res.statusCode = 400;
@@ -103,4 +121,4 @@ export default async function handler(req, res) {
   }
   res.statusCode = 200;
   res.end(JSON.stringify({ ok: true }));
-}
+};
