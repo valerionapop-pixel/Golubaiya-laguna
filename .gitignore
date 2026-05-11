@@ -1,0 +1,9 @@
+.env
+# результат npm run vercel-build для деплоя на Vercel (Output = public)
+/public/
+data/site-content.json
+data/history/
+data/bookings.jsonl
+data/server-actions.jsonl
+assets/uploads/*
+!assets/uploads/.gitkeep
