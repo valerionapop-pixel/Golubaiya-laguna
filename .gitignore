@@ -1,4 +1,5 @@
 .env
+/public/
 data/site-content.json
 data/history/
 data/bookings.jsonl
