@@ -3,8 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/vercel-static-build.cjs",
-    "vercel-build": "node scripts/vercel-static-build.cjs",
     "build:gallery": "vite build --config vite.gallery.config.ts",
     "dev:gallery": "vite build --config vite.gallery.config.ts --watch"
   },

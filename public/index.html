@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Голубая лагуна — бар с авторскими коктейлями и уютной атмосферой у воды." />
+  <title>Голубая лагуна — бар</title>
+  <meta property="og:title" content="Голубая лагуна — бар" />
+  <meta property="og:description" content="Авторские коктейли, мягкий свет и атмосфера ночной лагуны. 18+." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Голубая лагуна — бар" />
+  <meta name="twitter:description" content="Авторские коктейли и уютная атмосфера. Для гостей 18+." />
+  <meta name="twitter:image" content="og-cover.svg" />
+  <meta property="og:image" content="og-cover.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#3d1528" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://esm.sh" />
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+  <link rel="dns-prefetch" href="https://i.ibb.co" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=32" />
+  <link rel="stylesheet" href="gallery-src/gallery.css?v=22" />
+  <!-- Нужно для OrbitControls: внутри файла import … from "three" (bare module) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+    }
+  }
+  </script>
+</head>
+<body class="intro-locked">
+  <div
+    id="site-intro"
+    class="intro intro--gate-mode"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="intro-pitch"
+    aria-describedby="intro-pitch"
+  >
+    <div class="intro__bg" aria-hidden="true"></div>
+    <div class="intro__bg-aurora" aria-hidden="true"></div>
+    <div class="intro__vignette" aria-hidden="true"></div>
+    <div class="intro__lux" aria-hidden="true">
+      <span class="intro__lux-grain"></span>
+      <span class="intro__lux-chrome"></span>
+      <span class="intro__lux-bokeh"></span>
+      <span class="intro__lux-vignette"></span>
+    </div>
+    <div class="intro__gate-decor" aria-hidden="true">
+      <div class="intro__gate-rings">
+        <span class="intro__gate-ring"></span>
+        <span class="intro__gate-ring"></span>
+        <span class="intro__gate-ring"></span>
+      </div>
+      <div class="intro__gate-glow intro__gate-glow--1"></div>
+      <div class="intro__gate-glow intro__gate-glow--2"></div>
+      <div class="intro__gate-glow intro__gate-glow--3"></div>
+      <div class="intro__gate-sheen intro__gate-sheen--1"></div>
+      <div class="intro__gate-sheen intro__gate-sheen--2"></div>
+      <div class="intro__gate-sparkles">
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+        <span class="intro__gate-sparkle"></span>
+      </div>
+      <div class="intro__gate-dust">
+        <span class="intro__gate-dust-bit"></span>
+        <span class="intro__gate-dust-bit"></span>
+        <span class="intro__gate-dust-bit"></span>
+        <span class="intro__gate-dust-bit"></span>
+        <span class="intro__gate-dust-bit"></span>
+        <span class="intro__gate-dust-bit"></span>
+        <span class="intro__gate-dust-bit"></span>
+        <span class="intro__gate-dust-bit"></span>
+        <span class="intro__gate-dust-bit intro__gate-dust-bit--lg"></span>
+        <span class="intro__gate-dust-bit intro__gate-dust-bit--lg"></span>
+        <span class="intro__gate-dust-bit intro__gate-dust-bit--lg"></span>
+      </div>
+      <span class="intro__film-notch intro__film-notch--tl" aria-hidden="true"></span>
+      <span class="intro__film-notch intro__film-notch--tr" aria-hidden="true"></span>
+      <span class="intro__film-notch intro__film-notch--bl" aria-hidden="true"></span>
+      <span class="intro__film-notch intro__film-notch--br" aria-hidden="true"></span>
+      <span class="intro__gate-corner intro__gate-corner--tl"></span>
+      <span class="intro__gate-corner intro__gate-corner--tr"></span>
+      <span class="intro__gate-corner intro__gate-corner--bl"></span>
+      <span class="intro__gate-corner intro__gate-corner--br"></span>
+      <span class="intro__gate-rule intro__gate-rule--top"></span>
+      <span class="intro__gate-rule intro__gate-rule--bottom"></span>
+    </div>
+
+    <div class="intro__phase intro__phase--gate" id="intro-phase-gate">
+      <p class="intro__gate-kicker" id="content-gate-kicker">Приватное приглашение</p>
+      <p class="intro__gate-sub" id="intro-gate-sub"></p>
+      <div class="intro__pitch-wrap">
+        <p class="intro__pitch" id="intro-pitch">
+          Пройди опрос, чтобы погрузиться в мир искренней мужской любви в стенах «Голубой лагуны».
+        </p>
+      </div>
+      <button type="button" class="intro__start" id="intro-start" aria-label="Начать — показать заставку">
+        <span class="intro__start-rect" aria-hidden="true"></span>
+        <svg class="intro__hex" viewBox="0 0 120 69" aria-hidden="true" focusable="false">
+          <polygon
+            class="intro__hex-line"
+            points="30,4 90,4 116,34.5 90,65 30,65 4,34.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.25"
+          />
+        </svg>
+        <span class="intro__start-label" id="content-start-label">START</span>
+      </button>
+    </div>
+
+    <div class="intro__phase intro__phase--cinematic is-hidden" id="intro-phase-cinematic" aria-hidden="true">
+      <div class="intro__cine-flash" id="intro-cine-flash" aria-hidden="true"></div>
+      <canvas class="intro__canvas" id="intro-canvas" aria-hidden="true"></canvas>
+      <div class="intro__flares" aria-hidden="true">
+        <span class="intro__flare intro__flare--1"></span>
+        <span class="intro__flare intro__flare--2"></span>
+        <span class="intro__flare intro__flare--3"></span>
+        <span class="intro__flare intro__flare--4"></span>
+        <span class="intro__flare intro__flare--5"></span>
+        <span class="intro__flare intro__flare--6"></span>
+      </div>
+      <div class="intro__title-wrap">
+        <h1 class="intro__title" id="intro-cinematic-title">Начнём?</h1>
+        <div class="intro__title-glow" aria-hidden="true"></div>
+        <div class="intro__title-lens" aria-hidden="true"></div>
+      </div>
+      <p class="intro__skip-hint" id="content-cine-skip">Нажми в любое место, чтобы перейти к опросу</p>
+    </div>
+
+    <div class="intro__phase intro__phase--quiz is-hidden" id="intro-phase-quiz" aria-hidden="true">
+      <div class="intro-quiz__ambient" aria-hidden="true">
+        <span class="intro-quiz__orb intro-quiz__orb--1"></span>
+        <span class="intro-quiz__orb intro-quiz__orb--2"></span>
+        <span class="intro-quiz__orb intro-quiz__orb--3"></span>
+        <span class="intro-quiz__orb intro-quiz__orb--4"></span>
+      </div>
+      <div class="intro-quiz intro-quiz__surface" id="quiz-surface">
+        <p class="intro-quiz__eyebrow" id="content-quiz-eyebrow">Викторина «Голубой лагуны»</p>
+        <div class="intro-quiz__progress-head">
+          <div class="intro-quiz__progress" aria-hidden="true">
+            <div class="intro-quiz__progress-fill" id="quiz-progress-fill"></div>
+          </div>
+          <div class="intro-quiz__dots" id="quiz-dots" aria-hidden="true">
+            <span class="intro-quiz__dot"></span>
+            <span class="intro-quiz__dot"></span>
+            <span class="intro-quiz__dot"></span>
+          </div>
+        </div>
+        <p class="intro-quiz__meta" id="quiz-meta"></p>
+        <p class="intro-quiz__hint" id="content-quiz-hint">Один ответ — и сразу дальше. Без подсказок с барной стойки.</p>
+        <figure class="intro-quiz__figure" id="quiz-figure">
+          <img
+            class="intro-quiz__figure-img"
+            id="quiz-figure-img"
+            src=""
+            alt=""
+            width="320"
+            height="180"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <h2 class="intro-quiz__question" id="quiz-question" tabindex="-1"></h2>
+        <div class="intro-quiz__options" id="quiz-options" role="radiogroup" aria-labelledby="quiz-question"></div>
+      </div>
+    </div>
+
+    <div class="intro__phase intro__phase--success is-hidden" id="intro-phase-success" aria-hidden="true">
+      <div class="intro-success__ambient" aria-hidden="true">
+        <span class="intro-success__orb intro-success__orb--1"></span>
+        <span class="intro-success__orb intro-success__orb--2"></span>
+        <span class="intro-success__orb intro-success__orb--3"></span>
+        <span class="intro-success__orb intro-success__orb--4"></span>
+      </div>
+      <canvas class="intro-success__fx-canvas" id="intro-success-fx-canvas" aria-hidden="true"></canvas>
+      <div class="intro-success__decor" aria-hidden="true">
+        <div class="intro-success__rings">
+          <span class="intro-success__ring"></span>
+          <span class="intro-success__ring"></span>
+          <span class="intro-success__ring"></span>
+        </div>
+        <div class="intro-success__bloom intro-success__bloom--1"></div>
+        <div class="intro-success__bloom intro-success__bloom--2"></div>
+        <div class="intro-success__ray intro-success__ray--1"></div>
+        <div class="intro-success__ray intro-success__ray--2"></div>
+        <div class="intro-success__sheen" aria-hidden="true"></div>
+        <div class="intro-success__sparkles">
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+          <span class="intro-success__sparkle"></span>
+        </div>
+        <div class="intro-success__beam-hub" aria-hidden="true">
+          <span class="intro-success__beam" style="--beam: 0deg"></span>
+          <span class="intro-success__beam" style="--beam: 45deg"></span>
+          <span class="intro-success__beam" style="--beam: 90deg"></span>
+          <span class="intro-success__beam" style="--beam: 135deg"></span>
+          <span class="intro-success__beam" style="--beam: 22.5deg"></span>
+          <span class="intro-success__beam" style="--beam: 67.5deg"></span>
+          <span class="intro-success__beam" style="--beam: 112.5deg"></span>
+          <span class="intro-success__beam" style="--beam: 157.5deg"></span>
+        </div>
+        <div class="intro-success__mesh" aria-hidden="true"></div>
+      </div>
+      <canvas class="intro-success__confetti" id="intro-confetti-canvas" aria-hidden="true"></canvas>
+      <div class="intro-success__frame">
+        <span class="intro-success__ornament intro-success__ornament--tl" aria-hidden="true"></span>
+        <span class="intro-success__ornament intro-success__ornament--tr" aria-hidden="true"></span>
+        <span class="intro-success__ornament intro-success__ornament--bl" aria-hidden="true"></span>
+        <span class="intro-success__ornament intro-success__ornament--br" aria-hidden="true"></span>
+        <svg class="intro-success__sigil" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="intro-sigil-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#c9a86c" />
+              <stop offset="45%" stop-color="#fffefc" />
+              <stop offset="100%" stop-color="#5ee0ff" />
+            </linearGradient>
+          </defs>
+          <path
+            class="intro-success__sigil-path"
+            pathLength="100"
+            fill="none"
+            stroke="url(#intro-sigil-grad)"
+            stroke-width="1.35"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M38 28 V 72 H 72"
+          />
+        </svg>
+        <p class="intro-success__eyebrow" id="content-success-eyebrow">Вердикт лагуны</p>
+        <h2 class="intro-success__title" id="intro-success-text">
+          <span class="intro-success__line intro-success__line--a" id="content-success-line-a">Поздравляю, ты настоящий</span>
+          <span class="intro-success__line intro-success__line--b" id="content-success-line-b">мужчина.</span>
+          <span class="intro-success__line intro-success__line--c" id="content-success-line-c">Добро пожаловать в рай.</span>
+        </h2>
+        <p class="intro-success__subhint" id="content-success-subhint">Сейчас откроется сайт…</p>
+      </div>
+    </div>
+
+    <div class="intro__edge-ripple" id="intro-edge-ripple" aria-hidden="true"></div>
+
+    <div class="intro-modal is-hidden" id="quiz-fail-modal" role="alertdialog" aria-modal="true" aria-labelledby="content-quiz-fail-title">
+      <div class="intro-modal__backdrop" aria-hidden="true"></div>
+      <div class="intro-modal__panel">
+        <p class="intro-modal__text" id="content-quiz-fail-title">
+          Увы, ты не прошёл опрос. Не позорься и повтори попытку.
+        </p>
+        <button type="button" class="intro-modal__btn" id="content-quiz-fail-retry">Повторить попытку</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="header">
+    <a class="logo" id="content-site-logo" href="#top">Голубая лагуна</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="site-nav">
+      <a id="content-nav-0" href="#about">О баре</a>
+      <a id="content-nav-1" href="#menu">Меню</a>
+      <a id="content-nav-2" href="#gallery">Галерея</a>
+      <a id="content-nav-3" href="#vibe">Атмосфера</a>
+      <a id="content-nav-4" href="#visit">Визит</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div id="warp-root" class="hero__warp" aria-hidden="true"></div>
+      <div class="hero__scene" aria-hidden="true">
+        <div class="hero__mesh"></div>
+        <div class="hero__sheen"></div>
+        <div class="hero__bloom hero__bloom--1"></div>
+        <div class="hero__bloom hero__bloom--2"></div>
+        <div class="hero__bloom hero__bloom--3"></div>
+        <div class="hero__glow hero__glow--1"></div>
+        <div class="hero__glow hero__glow--2"></div>
+        <div class="hero__glow hero__glow--3"></div>
+        <div class="hero__rings">
+          <span class="hero__ring"></span>
+          <span class="hero__ring"></span>
+          <span class="hero__ring"></span>
+        </div>
+        <div class="hero__sparkles">
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+          <span class="hero__sparkle"></span>
+        </div>
+        <div class="hero__caustics" aria-hidden="true"></div>
+        <div class="hero__drift-layer" aria-hidden="true">
+          <span class="hero__drift hero__drift--1"></span>
+          <span class="hero__drift hero__drift--2"></span>
+          <span class="hero__drift hero__drift--3"></span>
+          <span class="hero__drift hero__drift--4"></span>
+        </div>
+        <div class="hero__horizon-glow" aria-hidden="true"></div>
+        <div class="hero__sweep" aria-hidden="true"></div>
+        <canvas class="hero__canvas" id="hero-fx-canvas" width="400" height="300" aria-hidden="true"></canvas>
+        <div class="hero__vignette"></div>
+      </div>
+      <div class="hero__layout">
+        <div class="hero__panel">
+          <div class="hero__panel-edge hero__panel-edge--tl"></div>
+          <div class="hero__panel-edge hero__panel-edge--br"></div>
+          <p class="hero__kicker hero__reveal" id="content-hero-kicker">бар · коктейли · вечер у воды</p>
+          <h1 class="hero__title hero__reveal hero__reveal--delay-1">
+            <span class="hero__title-inner" id="content-hero-title">Голубая лагуна</span>
+          </h1>
+          <p class="hero__lead hero__reveal hero__reveal--delay-2" id="content-hero-lead">
+            Там, где глубокий закат встречает холодную волну — вкус, свет и музыка в одном бокале.
+          </p>
+          <p class="hero__quote hero__reveal hero__reveal--delay-3" id="content-hero-quote">
+            «В лагуне важен не только бокал — важно, с кем его поднимаешь.»
+          </p>
+          <div class="hero__cta hero__reveal hero__reveal--delay-4">
+            <a class="btn btn--primary" href="#visit"><span class="btn__shine"></span><span id="content-hero-cta-primary">Забронировать стол</span></a>
+            <a class="btn btn--ghost" href="#menu"><span class="btn__shine btn__shine--ghost"></span><span id="content-hero-cta-ghost">Смотреть меню</span></a>
+          </div>
+        </div>
+        <figure class="hero__visual hero__reveal hero__reveal--delay-2">
+          <img
+            id="content-hero-img"
+            src="assets/hero-beach-bar.png?v=6"
+            width="720"
+            height="900"
+            alt="Закат у океана: в фокусе барная стойка с гирляндами и двое гостей с коктейлями; вдали на берегу размыто большой экран с футболом и двое на бин-бэгах с геймпадами"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section--about" id="about">
+      <div class="section__inner">
+        <h2 class="section__title" id="content-about-title">О баре</h2>
+        <p class="section__text" id="content-about-text">
+          Название — про тот самый цвет воды после заката: не море и не бассейн, а место, где хочется задержаться.
+          «Голубая лагуна» — бар в духе ночного побережья: мягкий свет, бархатные оттенки и прохладные акценты.
+          Мы собираем классику и авторские миксы на основе трав, цитрусов и редких настоек — без лишней суеты, только настроение.
+        </p>
+        <blockquote class="section__quote">
+          <p id="content-about-quote">«Здесь не стесняются заказать что-то яркое — и не спешат уходить после первого бокала.»</p>
+          <footer>— гость бара, <cite>легенда у стойки</cite> · художественный образ</footer>
+        </blockquote>
+        <ul class="pill-list">
+          <li id="content-pill-0">Авторская карта коктейлей</li>
+          <li id="content-pill-1">Вино и игристое</li>
+          <li id="content-pill-2">Закуски к бокалу</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--menu" id="menu">
+      <div class="section__inner">
+        <h2 class="section__title" id="content-menu-title">Меню</h2>
+        <p class="section__deck" id="content-menu-deck">Несколько акцентов — полная карта у барной стойки.</p>
+        <div class="cards">
+          <article class="card">
+            <h3 class="card__name" id="content-card-0-name">Розовый прибой</h3>
+            <p class="card__price" id="content-card-0-price">520 ₽</p>
+            <p class="card__meta" id="content-card-0-meta">джин · грейпфрут · гиацинтовый сироп · игристое</p>
+            <p class="card__note" id="content-card-0-note">Солёный финиш, как морской бриз после заката.</p>
+          </article>
+          <article class="card">
+            <h3 class="card__name" id="content-card-1-name">Лагуна №7</h3>
+            <p class="card__price" id="content-card-1-price">480 ₽</p>
+            <p class="card__meta" id="content-card-1-meta">ром · блю курасао · лайм · мята · содовая</p>
+            <p class="card__note" id="content-card-1-note">Ярко-голубой, освежающий, с лёгкой сладостью.</p>
+          </article>
+          <article class="card">
+            <h3 class="card__name" id="content-card-2-name">Гиацинт &amp; смородина</h3>
+            <p class="card__price" id="content-card-2-price">450 ₽</p>
+            <p class="card__meta" id="content-card-2-meta">водка · чёрная смородина · фиалка · лимон</p>
+            <p class="card__note" id="content-card-2-note">Цветочно-ягодный баланс без перегруза.</p>
+          </article>
+        </div>
+        <p class="section__fine" id="content-menu-fine">Цены ориентировочные — актуальная карта у бармена.</p>
+      </div>
+    </section>
+
+    <section class="section section--gallery" id="gallery" aria-label="Галерея">
+      <div class="section__inner section__inner--gallery-wide">
+        <h2 class="section__title" id="content-gallery-title">Галерея</h2>
+        <p class="section__deck" id="content-gallery-deck">
+          Звёздная 3D-галерея карточек — вращайте сцену, приближайте и открывайте кадр. Вживую в баре всё ещё красивее.
+        </p>
+        <div id="gallery-3d-root" class="gallery-3d-mount" aria-label="Интерактивная 3D-галерея"></div>
+      </div>
+    </section>
+
+    <section class="section section--vibe" id="vibe">
+      <div class="section__inner">
+        <h2 class="section__title" id="content-vibe-title">Атмосфера</h2>
+        <p class="section__text" id="content-vibe-text">
+          Приглушённые неоновые акценты, отражения в стекле и плейлисты от джаза до электроники в полгромкости —
+          чтобы можно было говорить и слышать друг друга.
+        </p>
+        <div class="mosaic" aria-hidden="true">
+          <div class="mosaic__cell mosaic__cell--a"></div>
+          <div class="mosaic__cell mosaic__cell--b"></div>
+          <div class="mosaic__cell mosaic__cell--c"></div>
+          <div class="mosaic__cell mosaic__cell--d"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--visit" id="visit">
+      <div class="section__inner section__inner--split">
+        <div>
+          <h2 class="section__title" id="content-visit-title">Визит</h2>
+          <p class="section__text" id="content-visit-text">
+            Рады гостям с 18 лет. Бронь по телефону, в мессенджере или через форму ниже — особенно на пятницу и субботу.
+          </p>
+          <p class="social">
+            <span class="social__label" id="content-social-label">Мы на связи</span>
+            <a class="social__link" id="content-social-tg-link" href="https://t.me/username" target="_blank" rel="noopener noreferrer"><span id="content-social-tg">Telegram</span></a>
+            <a class="social__link" id="content-social-vk-link" href="https://vk.com/username" target="_blank" rel="noopener noreferrer"><span id="content-social-vk">VK</span></a>
+          </p>
+          <address class="contact">
+            <p><strong>Адрес</strong><br /><span id="content-contact-addr">ул. Примерная, 1</span></p>
+            <p><strong>Телефон</strong><br /><a id="content-contact-phone-link" href="tel:+70000000000"><span id="content-contact-phone">+7 (000) 000-00-00</span></a></p>
+            <p><strong>Часы</strong><br /><span id="content-contact-hours">вт–чт 17:00–00:00 · пт–сб 17:00–02:00 · вс 15:00–23:00 · пн — выходной</span></p>
+          </address>
+          <form class="booking-form" id="booking-form" action="#" method="post">
+            <p class="booking-form__title" id="content-booking-form-title">Заявка на бронь</p>
+            <label class="booking-form__field">
+              <span class="booking-form__label" id="content-booking-lbl-name">Имя</span>
+              <input type="text" name="name" required autocomplete="name" />
+            </label>
+            <label class="booking-form__field">
+              <span class="booking-form__label" id="content-booking-lbl-phone">Телефон</span>
+              <input type="tel" name="phone" required autocomplete="tel" />
+            </label>
+            <label class="booking-form__field">
+              <span class="booking-form__label" id="content-booking-lbl-datetime">Дата и время</span>
+              <input id="booking-inp-datetime" type="text" name="datetime" required placeholder="Например: суббота, 20:00" />
+            </label>
+            <label class="booking-form__field">
+              <span class="booking-form__label" id="content-booking-lbl-note">Комментарий</span>
+              <textarea id="booking-inp-note" name="note" rows="2" placeholder="Количество гостей, повод…"></textarea>
+            </label>
+            <button type="submit" class="btn btn--primary booking-form__submit" id="content-booking-submit">Отправить заявку</button>
+            <div
+              class="booking-form__success is-hidden"
+              id="booking-form-success"
+              aria-hidden="true"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <div class="booking-form__success-card">
+                <svg class="booking-form__success-svg" viewBox="0 0 52 52" width="52" height="52" aria-hidden="true">
+                  <circle class="booking-form__success-ring" cx="26" cy="26" r="22" fill="none" stroke="currentColor" stroke-width="2" />
+                  <path
+                    class="booking-form__success-check"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 27l8 8 14-18"
+                  />
+                </svg>
+                <p class="booking-form__success-line" id="content-booking-success-line"></p>
+                <p class="booking-form__followup-lead" id="content-booking-followup-lead">
+                  Сохраните контакт бара и напишите в мессенджер — так мы быстрее подтвердим бронь (SMS не отправляем).
+                </p>
+                <div class="booking-form__followup-actions">
+                  <a
+                    class="btn btn--ghost booking-form__followup-btn is-hidden"
+                    id="booking-followup-wa"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><span id="content-booking-followup-wa">WhatsApp</span></a
+                  >
+                  <a
+                    class="btn btn--ghost booking-form__followup-btn is-hidden"
+                    id="booking-followup-tg"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    ><span id="content-booking-followup-tg">Telegram</span></a
+                  >
+                  <a class="btn btn--ghost booking-form__followup-btn is-hidden" id="booking-followup-tel" href="#"
+                    ><span id="content-booking-followup-tel">Позвонить / в контакты</span></a
+                  >
+                </div>
+              </div>
+            </div>
+            <p
+              class="booking-form__status is-hidden"
+              id="content-booking-status"
+              role="status"
+              aria-live="polite"
+            ></p>
+            <p class="booking-form__hint" id="content-booking-hint">Заявка уходит на почту бара (valerionapop@gmail.com). Если откроется ваш почтовый клиент — нажмите «Отправить».</p>
+          </form>
+        </div>
+        <div class="visit-aside">
+          <div class="visit-card">
+            <p class="visit-card__label" id="content-visit-card-label">Сегодня в баре</p>
+            <p class="visit-card__value" id="content-visit-card-value">DJ-сет · полночь</p>
+            <p class="visit-card__hint" id="content-visit-card-hint">Актуальные события уточняйте у администратора.</p>
+          </div>
+          <div class="map-wrap">
+            <iframe
+              id="content-map-iframe"
+              class="map-wrap__frame"
+              title="Карта: как добраться до бара"
+              src="https://yandex.ru/map-widget/v1/?um=constructor%3Aplaceholder&amp;source=constructor&amp;ll=37.617635%2C55.755814&amp;z=14"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+            <p class="map-wrap__note" id="content-map-note">Замените embed на свою точку в конструкторе карт Яндекса или Google.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__brand" id="content-footer-brand">Голубая лагуна</p>
+    <p class="footer__copy">© <span id="year"></span><span id="content-footer-suffix"> · Бар. Для гостей 18+.</span></p>
+  </footer>
+
+  <script src="laguna-site-overrides.js?v=7"></script>
+  <script src="script.js?v=38"></script>
+  <script type="module" src="warp-mount.js?v=14"></script>
+  <script type="module" src="gallery-3d-vanilla.js?v=23"></script>
+</body>
+</html>

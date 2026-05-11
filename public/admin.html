@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Админ — Голубая лагуна</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Outfit:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="admin.css?v=4" />
+  </head>
+  <body class="admin-body">
+    <div id="login-screen" class="admin-login">
+      <div class="admin-login__panel">
+        <h1>Админ-панель</h1>
+        <p class="admin-login__hint">
+          Редактирование текстов и опроса сохраняется в браузере (localStorage). Пароль по умолчанию:
+          <strong>laguna</strong> — смените его после входа.
+        </p>
+        <div class="admin-field">
+          <label for="admin-pass">Пароль</label>
+          <input id="admin-pass" type="password" autocomplete="current-password" />
+        </div>
+        <div class="admin-row">
+          <button type="button" class="admin-btn admin-btn--primary" id="admin-login-btn">Войти</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="app-screen" class="admin-app is-hidden">
+      <div class="admin-app__shell">
+        <header class="admin-app__head">
+          <div>
+            <h1>Голубая лагуна</h1>
+            <p>Контент главной страницы и викторины</p>
+          </div>
+          <div class="admin-toolbar">
+            <input
+              type="search"
+              id="admin-search"
+              class="admin-search"
+              placeholder="Поиск по подписям полей…"
+              autocomplete="off"
+            />
+            <button type="button" class="admin-btn admin-btn--ghost" id="admin-theme-toggle">
+              Светлая тема
+            </button>
+            <button type="button" class="admin-btn admin-btn--ghost" id="admin-diff-btn">Черновик ↔ опубл.</button>
+          </div>
+          <div class="admin-app__actions">
+            <a class="admin-btn admin-btn--ghost" href="index.html" target="_blank" rel="noopener">Сайт (опубл.)</a>
+            <button type="button" class="admin-btn" id="admin-save-draft">Черновик</button>
+            <button type="button" class="admin-btn admin-btn--primary" id="admin-publish">Опубликовать</button>
+            <button type="button" class="admin-btn admin-btn--ghost" id="admin-logout">Выйти</button>
+          </div>
+        </header>
+
+        <p class="admin-warn">
+          Черновик отдельно от опубликованного; превью: <code>adminPreview=1</code>. При запуске
+          <code>node dev-server.cjs</code>: запись JSON и загрузка картинок (токен
+          <code>LAGUNA_ADMIN_TOKEN</code>), публичная запись заявок в <code>data/bookings.jsonl</code>, снимки
+          контента в <code>data/history/</code>. Главная подтягивает <code>data/site-content.json</code> в
+          опубликованный слой localStorage, если файл есть.
+        </p>
+
+        <details id="admin-diff-panel" class="admin-details admin-details--diff is-hidden">
+          <summary>Отличия: текущая форма (черновик) ↔ опубликовано</summary>
+          <div class="admin-details__body">
+            <pre id="admin-diff-out" class="admin-diff-pre"></pre>
+          </div>
+        </details>
+
+        <div class="admin-layout">
+          <div class="admin-layout__main">
+            <div id="admin-form-root"></div>
+          </div>
+          <aside class="admin-layout__aside" aria-label="Превью">
+            <p class="admin-preview__title">Превью (черновик)</p>
+            <iframe id="admin-preview-frame" class="admin-preview__frame" title="Превью сайта" src=""></iframe>
+            <button type="button" class="admin-btn admin-btn--ghost admin-preview__btn" id="admin-preview-reload">
+              Обновить превью
+            </button>
+          </aside>
+        </div>
+
+        <details class="admin-details">
+          <summary>Сервис: экспорт, импорт, сброс</summary>
+          <div class="admin-details__body">
+            <div class="admin-row">
+              <button type="button" class="admin-btn admin-btn--ghost" id="admin-export">Скачать JSON (черновик)</button>
+              <label class="admin-btn admin-btn--ghost" style="cursor: pointer">
+                Импорт в черновик
+                <input id="admin-import" type="file" accept="application/json,.json" class="is-hidden" />
+              </label>
+              <button type="button" class="admin-btn admin-btn--danger" id="admin-reset">Сбросить всё</button>
+            </div>
+            <div class="admin-field" style="margin-top: 1rem">
+              <label for="api-token">Токен dev-сервера (<code>X-Laguna-Token</code>, см. <code>LAGUNA_ADMIN_TOKEN</code>)</label>
+              <div class="admin-row" style="margin-top: 0.35rem">
+                <input
+                  id="api-token"
+                  type="password"
+                  autocomplete="off"
+                  placeholder="По умолчанию: laguna-dev-secret"
+                  style="flex: 1; min-width: 12rem; padding: 0.45rem; border-radius: 8px; background: rgba(0,0,0,0.25); color: inherit; border: 1px solid rgba(255,255,255,0.12)"
+                />
+                <button type="button" class="admin-btn admin-btn--ghost" id="api-token-save">Запомнить</button>
+              </div>
+            </div>
+            <div class="admin-row">
+              <button type="button" class="admin-btn" id="admin-server-push">Черновик → сервер (JSON)</button>
+              <button type="button" class="admin-btn admin-btn--ghost" id="admin-server-pull">Сервер → черновик</button>
+            </div>
+            <div class="admin-field">
+              <label for="hero-upload-file">Hero: загрузить картинку на сервер (до ~480 КБ)</label>
+              <div class="admin-row" style="margin-top: 0.35rem">
+                <input id="hero-upload-file" type="file" accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml" />
+                <button type="button" class="admin-btn admin-btn--ghost" id="hero-upload-btn">Загрузить и подставить URL</button>
+              </div>
+            </div>
+            <div class="admin-field" style="margin-top: 1rem">
+              <label for="admin-history-select">История публикаций (восстановить в черновик)</label>
+              <div class="admin-row" style="margin-top: 0.35rem">
+                <select id="admin-history-select" style="flex: 1; min-width: 12rem; padding: 0.45rem; border-radius: 8px; background: rgba(0,0,0,0.25); color: inherit; border: 1px solid rgba(255,255,255,0.12)"></select>
+                <button type="button" class="admin-btn" id="admin-history-restore">Восстановить</button>
+              </div>
+            </div>
+            <div class="admin-field" style="margin-top: 1rem">
+              <label for="admin-new-pass">Новый пароль (сохранится в этом браузере)</label>
+              <input id="admin-new-pass" type="password" autocomplete="new-password" placeholder="Оставьте пустым, чтобы не менять" />
+            </div>
+            <div class="admin-row">
+              <button type="button" class="admin-btn" id="admin-set-pass">Обновить пароль</button>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div id="admin-toast" class="admin-toast" role="status"></div>
+
+    <script src="laguna-site-overrides.js?v=5"></script>
+    <script src="admin.js?v=5"></script>
+  </body>
+</html>
