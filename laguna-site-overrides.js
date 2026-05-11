@@ -235,8 +235,10 @@
         "content-contact-phone": "+7 (000) 000-00-00",
         "content-contact-hours": "вт–чт 17:00–00:00 · пт–сб 17:00–02:00 · вс 15:00–23:00 · пн — выходной",
         "content-booking-form-title": "Заявка на бронь",
+        "content-booking-deck":
+          "Ответим в Telegram или на почту — укажите удобное время.",
         "content-booking-hint":
-          "Заявка уходит на почту бара (valerionapop@gmail.com). Если откроется ваш почтовый клиент — нажмите «Отправить».",
+          "Заявка уходит на сервер и в Telegram; при сбое откроется почта — нажмите «Отправить».",
         "content-booking-success":
           "Заявка отправлена. Мы свяжемся с вами в ближайшее время — спасибо!",
         "content-booking-followup-lead":

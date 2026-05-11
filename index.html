@@ -24,7 +24,7 @@
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
   <link rel="dns-prefetch" href="https://i.ibb.co" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=32" />
+  <link rel="stylesheet" href="styles.css?v=33" />
   <link rel="stylesheet" href="gallery-src/gallery.css?v=22" />
   <!-- Нужно для OrbitControls: внутри файла import … from "three" (bare module) -->
   <script type="importmap">
@@ -474,7 +474,11 @@
             <p><strong>Часы</strong><br /><span id="content-contact-hours">вт–чт 17:00–00:00 · пт–сб 17:00–02:00 · вс 15:00–23:00 · пн — выходной</span></p>
           </address>
           <form class="booking-form" id="booking-form" action="#" method="post">
-            <p class="booking-form__title" id="content-booking-form-title">Заявка на бронь</p>
+            <div class="booking-form__head">
+              <p class="booking-form__title" id="content-booking-form-title">Заявка на бронь</p>
+              <p class="booking-form__deck" id="content-booking-deck">Ответим в Telegram или на почту — укажите удобное время.</p>
+            </div>
+            <div class="booking-form__fields">
             <label class="booking-form__field">
               <span class="booking-form__label" id="content-booking-lbl-name">Имя</span>
               <input type="text" name="name" required autocomplete="name" />
@@ -483,14 +487,15 @@
               <span class="booking-form__label" id="content-booking-lbl-phone">Телефон</span>
               <input type="tel" name="phone" required autocomplete="tel" />
             </label>
-            <label class="booking-form__field">
+            <label class="booking-form__field booking-form__field--wide">
               <span class="booking-form__label" id="content-booking-lbl-datetime">Дата и время</span>
               <input id="booking-inp-datetime" type="text" name="datetime" required placeholder="Например: суббота, 20:00" />
             </label>
-            <label class="booking-form__field">
+            <label class="booking-form__field booking-form__field--wide">
               <span class="booking-form__label" id="content-booking-lbl-note">Комментарий</span>
               <textarea id="booking-inp-note" name="note" rows="2" placeholder="Количество гостей, повод…"></textarea>
             </label>
+            </div>
             <button type="submit" class="btn btn--primary booking-form__submit" id="content-booking-submit">Отправить заявку</button>
             <div
               class="booking-form__success is-hidden"
@@ -546,7 +551,9 @@
               role="status"
               aria-live="polite"
             ></p>
-            <p class="booking-form__hint" id="content-booking-hint">Заявка уходит на почту бара (valerionapop@gmail.com). Если откроется ваш почтовый клиент — нажмите «Отправить».</p>
+            <p class="booking-form__hint" id="content-booking-hint">
+              Заявка уходит на сервер и в Telegram; при сбое откроется почта — нажмите «Отправить».
+            </p>
           </form>
         </div>
         <div class="visit-aside">
@@ -576,7 +583,7 @@
     <p class="footer__copy">© <span id="year"></span><span id="content-footer-suffix"> · Бар. Для гостей 18+.</span></p>
   </footer>
 
-  <script src="laguna-site-overrides.js?v=7"></script>
+  <script src="laguna-site-overrides.js?v=8"></script>
   <script src="script.js?v=40"></script>
   <script type="module" src="warp-mount.js?v=14"></script>
   <script type="module" src="gallery-3d-vanilla.js?v=23"></script>

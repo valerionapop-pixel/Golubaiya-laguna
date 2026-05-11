@@ -1750,7 +1750,7 @@
     }
     if (!nosw) {
       navigator.serviceWorker
-        .register("sw.js?v=42", { scope: "./" })
+        .register("sw.js?v=43", { scope: "./" })
         .then(function (reg) {
           try {
             reg.update();
