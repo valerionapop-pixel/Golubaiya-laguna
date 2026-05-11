@@ -33,6 +33,12 @@ async function main() {
   var el = document.getElementById("warp-root");
   if (!el) return;
 
+  var hero = document.querySelector("section.hero");
+  if (hero && hero.classList.contains("hero--photo-focus")) {
+    el.style.display = "none";
+    return;
+  }
+
   var reduce = false;
   try {
     reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

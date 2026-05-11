@@ -1,5 +1,5 @@
 /* Минимальный кеш статики. HTML/JS/CSS — сначала сеть, чтобы правки были видны сразу. */
-var CACHE = "laguna-static-v43";
+var CACHE = "laguna-static-v44";
 var CORE = [
   "./",
   "./index.html",

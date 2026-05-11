@@ -3749,17 +3749,12 @@ a:hover {
   }
 }
 
-@keyframes hero-photo-breathe {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-    filter: saturate(1.04) brightness(1) contrast(1)
-      drop-shadow(0 14px 32px rgba(15, 8, 18, 0.42)) drop-shadow(0 0 28px rgba(61, 184, 232, 0.14));
+@keyframes hero-photo-cine {
+  0% {
+    transform: scale(1.12) translate3d(1.8%, -1.2%, 0);
   }
-  50% {
-    transform: translate3d(0, -12px, 0) scale(1.022) rotate(0.35deg);
-    filter: saturate(1.16) brightness(1.07) contrast(1.02)
-      drop-shadow(0 22px 48px rgba(15, 8, 18, 0.5)) drop-shadow(0 0 52px rgba(201, 75, 143, 0.2));
+  100% {
+    transform: scale(1.28) translate3d(-2.2%, 1.4%, 0);
   }
 }
 
@@ -3838,8 +3833,12 @@ a:hover {
   padding: 4.5rem 1.25rem 5.5rem;
   overflow: hidden;
   isolation: isolate;
-  background: radial-gradient(ellipse 120% 80% at 50% -10%, rgba(61, 184, 232, 0.06) 0%, transparent 45%),
-    radial-gradient(ellipse 90% 60% at 100% 30%, rgba(201, 75, 143, 0.05) 0%, transparent 42%);
+  background: transparent;
+}
+
+.hero.hero--photo-focus > .hero__warp,
+.hero.hero--photo-focus > .hero__scene {
+  display: none !important;
 }
 
 /* Сетка: стеклянная панель слева, фото бара справа */
@@ -3888,6 +3887,11 @@ a:hover {
   }
 }
 
+.hero.hero--photo-focus .hero__visual::before,
+.hero.hero--photo-focus .hero__visual::after {
+  display: none;
+}
+
 .hero__visual {
   position: relative;
   isolation: isolate;
@@ -3897,13 +3901,12 @@ a:hover {
   min-width: 0;
   border-radius: calc(var(--radius) + 0.45rem);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow:
-    0 28px 70px rgba(15, 8, 18, 0.55),
-    0 0 0 1px rgba(255, 248, 252, 0.06) inset,
-    0 0 48px rgba(61, 184, 232, 0.14),
-    0 0 36px rgba(201, 75, 143, 0.06);
-  background: rgba(8, 6, 14, 0.55);
+    0 24px 56px rgba(15, 8, 18, 0.45),
+    0 0 0 1px rgba(255, 248, 252, 0.05) inset,
+    0 0 36px rgba(61, 184, 232, 0.1);
+  background: rgba(6, 8, 14, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3953,11 +3956,15 @@ a:hover {
   animation: hero-visual-shine 7.5s ease-in-out infinite;
 }
 
-/* Пульсация рамки + тени (вторая анимация рядом с hero-reveal) */
+/* Пульсация рамки — только без режима «фото в фокусе» */
 .hero__visual.hero__reveal.hero__reveal--delay-2 {
   animation:
     hero-reveal-up 1.05s var(--ease) 0.55s forwards,
     hero-visual-border-glow 11s ease-in-out 1.85s infinite;
+}
+
+.hero.hero--photo-focus .hero__visual.hero__reveal.hero__reveal--delay-2 {
+  animation: hero-reveal-up 1.05s var(--ease) 0.55s forwards;
 }
 
 @media (min-width: 920px) {
@@ -3985,10 +3992,20 @@ a:hover {
   max-height: min(68vh, 36rem);
   margin: 0 auto;
   object-fit: contain;
-  object-position: center;
+  object-position: 52% 42%;
   border-radius: calc(var(--radius) + 0.2rem);
-  animation: hero-photo-breathe 9.5s ease-in-out infinite;
-  will-change: transform, filter;
+  transform-origin: 52% 42%;
+  animation: hero-photo-cine 28s ease-in-out infinite alternate;
+  will-change: transform;
+  filter: saturate(1.06) contrast(1.02)
+    drop-shadow(0 12px 28px rgba(15, 8, 18, 0.38)) drop-shadow(0 0 24px rgba(61, 184, 232, 0.12));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero.hero--photo-focus .hero__visual img {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 @media (min-width: 920px) {
